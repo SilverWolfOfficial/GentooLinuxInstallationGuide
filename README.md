@@ -228,20 +228,17 @@ $ echo "*/* $(cpuid2cpuflags)" >> /etc/portage/package.use/system
 $ emerge --verbose --update --deep --newuse --emptytree @world
 #更新并重构@world集合（这一步很大概率会提示缺少USE,请根据输出的提示修改USE，修改完成后重新执行即可）
 
-$ env-update && source /etc/profile && export PS1="(chroot) ${PS1}"
-#更新并初始化chroot环境并定义PS1为(chroot) ${PS1}，使其更容易分辨当前所处环境
-
 $ etc-update --automode -5
 #更新配置文件
 
-$ emerge --ask @preserved-rebuild
+$ env-update && source /etc/profile && export PS1="(chroot) ${PS1}"
+#更新并初始化chroot环境并定义PS1为(chroot) ${PS1}，使其更容易分辨当前所处环境
+
+$ emerge @preserved-rebuild
 #更新依赖库
 
 $ emerge --verbose --update --deep --newuse @world
 #重新更新world集合
-
-$ env-update && source /etc/profile && export PS1="(chroot) ${PS1}"
-#更新并初始化chroot环境并定义PS1为(chroot) ${PS1}，使其更容易分辨当前所处环境
 
 $ etc-update --automode -5
 #更新配置文件
@@ -310,7 +307,7 @@ $ nano -w /etc/modprobe.d/blacklist.conf
 blacklist nouveau
 #禁用nouveau模块
 
-$ emerge --ask @module-rebuild
+$ emerge @module-rebuild
 #重构内核模块
 
 $ emerge --config sys-kernel/gentoo-kernel
